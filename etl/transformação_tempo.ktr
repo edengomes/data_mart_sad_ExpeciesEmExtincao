@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>transformação_tempo</name>
+    <name>Transformação_tempo</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -436,7 +436,7 @@
   <notepads>
   </notepads>
   <connection>
-    <name>postgres_db_casa</name>
+    <name>sad_data_mart</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
@@ -489,17 +489,17 @@
   <order>
     <hop>
       <from>Generate rows</from>
-      <to>Add sequence</to>
+      <to>Add sequence - ano </to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Add sequence</from>
+      <from>Add sequence - ano </from>
       <to>Table output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Add sequence</name>
+    <name>Add sequence - ano </name>
     <type>Sequence</type>
     <description/>
     <distribute>Y</distribute>
@@ -511,7 +511,7 @@
     </partitioning>
     <valuename>ano</valuename>
     <use_database>N</use_database>
-    <connection/>
+    <connection>sad_data_mart</connection>
     <schema/>
     <seqname>SEQ_</seqname>
     <use_counter>Y</use_counter>
@@ -560,7 +560,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>192</xloc>
+      <xloc>176</xloc>
       <yloc>176</yloc>
       <draw>Y</draw>
     </GUI>
@@ -576,14 +576,14 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>postgres_db_casa</connection>
+    <connection>sad_data_mart</connection>
     <schema>public</schema>
     <table>dim_tempo</table>
     <commit>1000</commit>
     <truncate>N</truncate>
     <ignore_errors>N</ignore_errors>
     <use_batch>Y</use_batch>
-    <specify_fields>N</specify_fields>
+    <specify_fields>Y</specify_fields>
     <partitioning_enabled>N</partitioning_enabled>
     <partitioning_field/>
     <partitioning_daily>N</partitioning_daily>
@@ -594,6 +594,10 @@
     <return_keys>N</return_keys>
     <return_field/>
     <fields>
+      <field>
+        <column_name>ano</column_name>
+        <stream_name>ano</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>

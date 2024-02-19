@@ -436,7 +436,7 @@
   <notepads>
   </notepads>
   <connection>
-    <name>table connection</name>
+    <name>connection_sad</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
@@ -508,13 +508,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Modified JavaScript value</from>
-      <to>Filter rows 2 - sigla estado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Split field to rows - estado</from>
-      <to>Modified JavaScript value</to>
+      <to>remoção espaçamento- estado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -533,11 +528,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Replace in string - estado</from>
-      <to>Replace in string - principais ameaças</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>CSV file input</from>
       <to>Select values - campos utlizados</to>
       <enabled>Y</enabled>
@@ -553,11 +543,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows 2 - sigla estado</from>
-      <to>Replace in string - estado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Filter rows 2 - principais ameaças</from>
       <to>Filter rows 3 - nome </to>
       <enabled>Y</enabled>
@@ -568,17 +553,42 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>removendo campos desnecessários</from>
+      <to>Sort rows - ordenando id's dimensões</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort rows - ordenando id's dimensões</from>
+      <to>Group by - agrupando quantidade</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Database lookup tempo</from>
-      <to>Select values</to>
+      <to>Add sequence - quantidade especies</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values</from>
-      <to>Sort rows</to>
+      <from>Add sequence - quantidade especies</from>
+      <to>removendo campos desnecessários</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort rows</from>
+      <from>remoção espaçamento- estado</from>
+      <to>Removendo campos antigos - Estado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Removendo campos antigos - Estado</from>
+      <to>Replace - nome completo estado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace - nome completo estado</from>
+      <to>Replace in string - principais ameaças</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Group by - agrupando quantidade</from>
       <to>Table output</to>
       <enabled>Y</enabled>
     </hop>
@@ -618,7 +628,42 @@
     </remotesteps>
     <GUI>
       <xloc>64</xloc>
-      <yloc>368</yloc>
+      <yloc>304</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add sequence - quantidade especies</name>
+    <type>Sequence</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <valuename>id_seq</valuename>
+    <use_database>N</use_database>
+    <connection>connection_sad</connection>
+    <schema/>
+    <seqname>SEQ_</seqname>
+    <use_counter>Y</use_counter>
+    <counter_name/>
+    <start_at>1</start_at>
+    <increment_by>1</increment_by>
+    <max_value>999999999</max_value>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1136</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -633,7 +678,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:\lista-de-especies-ameacas-2020.csv</filename>
+    <filename>C:\Users\edeni\OneDrive\Área de Trabalho\uast\lista-de-especies-ameacas-2020.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -823,8 +868,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
-      <yloc>128</yloc>
+      <xloc>48</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -839,7 +884,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>table connection</connection>
+    <connection>connection_sad</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
@@ -877,8 +922,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
-      <yloc>368</yloc>
+      <xloc>624</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -893,7 +938,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>table connection</connection>
+    <connection>connection_sad</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
@@ -902,9 +947,9 @@
       <table>dim_espaco</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
+      <eat_row_on_failure>Y</eat_row_on_failure>
       <key>
-        <name>estado</name>
+        <name>sigla</name>
         <field>estado</field>
         <condition>=</condition>
         <name2/>
@@ -925,8 +970,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
-      <yloc>368</yloc>
+      <xloc>912</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -941,7 +986,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>table connection</connection>
+    <connection>connection_sad</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
@@ -1003,8 +1048,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>272</xloc>
-      <yloc>368</yloc>
+      <xloc>336</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1019,7 +1064,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>table connection</connection>
+    <connection>connection_sad</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
@@ -1051,8 +1096,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>800</xloc>
-      <yloc>368</yloc>
+      <xloc>1136</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1096,7 +1141,7 @@
     </remotesteps>
     <GUI>
       <xloc>368</xloc>
-      <yloc>128</yloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1130,52 +1175,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>224</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter rows 2 - sigla estado</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>Replace in string - estado</send_true_to>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>tamanho</leftvalue>
-        <function>=</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>2</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask/>
-        </value>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>960</xloc>
-      <yloc>128</yloc>
+      <xloc>352</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1210,12 +1211,67 @@
     </remotesteps>
     <GUI>
       <xloc>64</xloc>
-      <yloc>224</yloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Modified JavaScript value</name>
+    <name>Group by - agrupando quantidade</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>N</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>id_dim_especie</name>
+      </field>
+      <field>
+        <name>id_dim_ameaca</name>
+      </field>
+      <field>
+        <name>id_dim_espaco</name>
+      </field>
+      <field>
+        <name>id_dim_tempo</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>quantidade</aggregate>
+        <subject>id_seq</subject>
+        <type>SUM</type>
+        <valuefield>1</valuefield>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>320</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>remoção espaçamento- estado</name>
     <type>ScriptValueMod</type>
     <description/>
     <distribute>Y</distribute>
@@ -1271,13 +1327,13 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
-      <yloc>128</yloc>
+      <xloc>704</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Replace in string - estado</name>
+    <name>Replace - nome completo estado</name>
     <type>ReplaceString</type>
     <description/>
     <distribute>Y</distribute>
@@ -1289,7 +1345,7 @@ var tamanho = nome? nome.length : 0 ;
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>AC</replace_string>
@@ -1301,7 +1357,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>AL</replace_string>
@@ -1313,7 +1369,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>AP</replace_string>
@@ -1325,7 +1381,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>AM</replace_string>
@@ -1337,7 +1393,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>BA</replace_string>
@@ -1349,7 +1405,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>CE</replace_string>
@@ -1361,7 +1417,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>ES</replace_string>
@@ -1373,7 +1429,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>GO</replace_string>
@@ -1385,7 +1441,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>MA</replace_string>
@@ -1397,7 +1453,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>MT</replace_string>
@@ -1409,7 +1465,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>MS</replace_string>
@@ -1421,7 +1477,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>MG</replace_string>
@@ -1433,7 +1489,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>PA</replace_string>
@@ -1445,7 +1501,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>PB</replace_string>
@@ -1457,7 +1513,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>PR</replace_string>
@@ -1469,7 +1525,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>PE</replace_string>
@@ -1481,7 +1537,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>PI</replace_string>
@@ -1493,7 +1549,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>RJ</replace_string>
@@ -1505,7 +1561,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>RN</replace_string>
@@ -1517,7 +1573,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>RS</replace_string>
@@ -1529,7 +1585,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>RO</replace_string>
@@ -1541,11 +1597,11 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>RR</replace_string>
-        <replace_by_string>Rondônia</replace_by_string>
+        <replace_by_string>Roraima</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>yes</whole_word>
@@ -1553,7 +1609,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>SC</replace_string>
@@ -1565,7 +1621,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>SP</replace_string>
@@ -1577,7 +1633,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>SE</replace_string>
@@ -1589,7 +1645,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>TO</replace_string>
@@ -1601,7 +1657,7 @@ var tamanho = nome? nome.length : 0 ;
         <is_unicode>no</is_unicode>
       </field>
       <field>
-        <in_stream_name>estado</in_stream_name>
+        <in_stream_name>sigla</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>DF</replace_string>
@@ -1622,8 +1678,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1184</xloc>
-      <yloc>128</yloc>
+      <xloc>1136</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1673,13 +1729,13 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1184</xloc>
-      <yloc>224</yloc>
+      <xloc>1136</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
+    <name>removendo campos desnecessários</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1696,9 +1752,6 @@ var tamanho = nome? nome.length : 0 ;
       </remove>
       <remove>
         <name>Categoria de Ameaça</name>
-      </remove>
-      <remove>
-        <name>Estados de Ocorrência</name>
       </remove>
       <remove>
         <name>Família</name>
@@ -1728,13 +1781,7 @@ var tamanho = nome? nome.length : 0 ;
         <name>ano</name>
       </remove>
       <remove>
-        <name>estado</name>
-      </remove>
-      <remove>
         <name>sigla</name>
-      </remove>
-      <remove>
-        <name>tamanho</name>
       </remove>
       <remove>
         <name>ameacas</name>
@@ -1749,8 +1796,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>928</xloc>
-      <yloc>368</yloc>
+      <xloc>896</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1808,12 +1855,49 @@ var tamanho = nome? nome.length : 0 ;
     </remotesteps>
     <GUI>
       <xloc>208</xloc>
-      <yloc>128</yloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Sort rows</name>
+    <name>Removendo campos antigos - Estado</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>Estados de Ocorrência</name>
+      </remove>
+      <remove>
+        <name>estado</name>
+      </remove>
+      <remove>
+        <name>tamanho</name>
+      </remove>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>928</xloc>
+      <yloc>48</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort rows - ordenando id's dimensões</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -1832,6 +1916,14 @@ var tamanho = nome? nome.length : 0 ;
     <unique_rows>N</unique_rows>
     <fields>
       <field>
+        <name>id_dim_especie</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
         <name>id_dim_ameaca</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
@@ -1841,14 +1933,6 @@ var tamanho = nome? nome.length : 0 ;
       </field>
       <field>
         <name>id_dim_espaco</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>id_dim_especie</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -1873,8 +1957,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1040</xloc>
-      <yloc>368</yloc>
+      <xloc>608</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1905,8 +1989,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>544</xloc>
-      <yloc>128</yloc>
+      <xloc>528</xloc>
+      <yloc>48</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1937,8 +2021,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>896</xloc>
-      <yloc>224</yloc>
+      <xloc>912</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1969,8 +2053,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
-      <yloc>224</yloc>
+      <xloc>624</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1985,7 +2069,7 @@ var tamanho = nome? nome.length : 0 ;
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>table connection</connection>
+    <connection>connection_sad</connection>
     <schema>public</schema>
     <table>especies_ameacadas_fato</table>
     <commit>1000</commit>
@@ -2019,6 +2103,10 @@ var tamanho = nome? nome.length : 0 ;
         <column_name>id_dim_tempo</column_name>
         <stream_name>id_dim_tempo</stream_name>
       </field>
+      <field>
+        <column_name>quant_total_especies_ameacadas</column_name>
+        <stream_name>quantidade</stream_name>
+      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -2029,8 +2117,8 @@ var tamanho = nome? nome.length : 0 ;
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1248</xloc>
-      <yloc>368</yloc>
+      <xloc>48</xloc>
+      <yloc>432</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

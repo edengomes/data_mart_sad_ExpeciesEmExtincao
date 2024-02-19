@@ -436,7 +436,7 @@
   <notepads>
   </notepads>
   <connection>
-    <name>postgres_db_local</name>
+    <name>sad_data_mart</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
@@ -488,32 +488,32 @@
   </connection>
   <order>
     <hop>
-      <from>Sort rows</from>
+      <from>Sort rows - ordenando</from>
       <to>Unique rows</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values</from>
-      <to>Sort rows</to>
+      <to>Sort rows - ordenando</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Unique rows</from>
-      <to>Filter rows</to>
+      <to>Filter rows - not null</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows</from>
+      <from>Filter rows - not null</from>
       <to>Table output</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>CSV file input 2</from>
-      <to>Filter rows 2</to>
+      <to>Filter rows  - fauna</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows 2</from>
+      <from>Filter rows  - fauna</from>
       <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
@@ -529,7 +529,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>C:\lista-de-especies-ameacas-2020.csv</filename>
+    <filename>C:\Users\edeni\OneDrive\Área de Trabalho\uast\lista-de-especies-ameacas-2020.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -725,7 +725,7 @@
     </GUI>
   </step>
   <step>
-    <name>Filter rows</name>
+    <name>Filter rows - not null</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -754,7 +754,51 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>560</xloc>
+      <xloc>672</xloc>
+      <yloc>160</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows  - fauna</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <send_true_to>Select values</send_true_to>
+    <send_false_to/>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>﻿Fauna/Flora</leftvalue>
+        <function>=</function>
+        <rightvalue/>
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>Fauna</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask/>
+        </value>
+      </condition>
+    </compare>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>192</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -800,13 +844,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>314</xloc>
-      <yloc>155</yloc>
+      <xloc>320</xloc>
+      <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Sort rows</name>
+    <name>Sort rows - ordenando</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -882,7 +926,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>400</xloc>
+      <xloc>432</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -898,7 +942,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>postgres_db_local</connection>
+    <connection>sad_data_mart</connection>
     <schema>public</schema>
     <table>dim_especie</table>
     <commit>1000</commit>
@@ -950,7 +994,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>640</xloc>
+      <xloc>832</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1005,51 +1049,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>496</xloc>
-      <yloc>160</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter rows 2</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>Select values</send_true_to>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>﻿Fauna/Flora</leftvalue>
-        <function>=</function>
-        <rightvalue/>
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>Fauna</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask/>
-        </value>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>192</xloc>
+      <xloc>544</xloc>
       <yloc>160</yloc>
       <draw>Y</draw>
     </GUI>
